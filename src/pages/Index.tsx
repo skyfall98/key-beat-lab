@@ -1,12 +1,43 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { TopBar } from "@/components/TopBar";
+import { SequencerGrid } from "@/components/SequencerGrid";
+import { BottomPanel } from "@/components/BottomPanel";
+import { useSequencer } from "@/hooks/useSequencer";
+import { useKeyboard } from "@/hooks/useKeyboardControls";
 
 const Index = () => {
+  const {
+    tracks,
+    bpm,
+    setBpm,
+    isPlaying,
+    currentStep,
+    toggleStep,
+    setVolume,
+    toggleMute,
+    togglePlayback,
+    triggerSound,
+    triggeredSteps,
+  } = useSequencer();
+
+  useKeyboard({ toggleStep, triggerSound, togglePlayback });
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="flex flex-col h-screen overflow-hidden bg-background">
+      <TopBar
+        bpm={bpm}
+        setBpm={setBpm}
+        isPlaying={isPlaying}
+        togglePlayback={togglePlayback}
+      />
+      <SequencerGrid
+        tracks={tracks}
+        currentStep={currentStep}
+        toggleStep={toggleStep}
+        setVolume={setVolume}
+        toggleMute={toggleMute}
+        triggeredSteps={triggeredSteps}
+      />
+      <BottomPanel />
     </div>
   );
 };
